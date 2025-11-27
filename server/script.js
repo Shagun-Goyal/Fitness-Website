@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/api/message", (req, res) => {
-  console.log('GET /api/message from', req.ip);
+  console.log('GET /api/message', req.ip);
   res.json({ message: "Hello from express backend" });
 });
 
