@@ -1,61 +1,34 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 
-const fetchMsg = async () => {
+function Hero() {
+  const [data, setData] = useState("Loading...");
+  const [data1, setData1] = useState("Loading...");
+
+  useEffect(() => {
+    fetchMsg();
+  }, []);
+
+  const i = 0;
+  const fetchMsg = async () => {
       try {
         const base = "http://localhost:5100";
-        const res = await fetch(base + "/api/message");
-        const json = await res.json();
-        setData(json.message);
+        const res = await axios.get(base + "/api/message");
+        console.log(i);
+        setData(res.data.images[i].imageUrl);
+        setData1(res.data.images[i+1].imageUrl);
       } catch (err) {
           console.error("Fetch error:", err);
           setData("Failed to load message: " + err.message);
       }
     };
 
-    const abc = async () => {
-    try {
-    const response = await fetch("http://localhost:5100/api/targets");
-    const data = await response.json();
-    console.log(data.message);
-    }
-    catch (err) {
-          console.error("Fetch error:", err);
-          setData("Failed to load message: " + err.message);
-      }
-    };
-
-function Hero() {
-  const [data, setData] = useState("Loading...");
-
-  useEffect(() => {
-    abc();
-  }, []);
-
-  const images = [
-    {
-      id: 1,
-      url: "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg"
-    },
-    {
-      id: 2,
-      url: "https://images.pexels.com/photos/136405/pexels-photo-136405.jpeg"
-    },
-    {id: 3,
-      url: "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg"
-    },
-    {id: 4,
-      url: "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg"
-    },
-    {id: 5,
-      url: "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg"
-    }
-  ];
-   
   return (
     <>
-    <div className = "w-auto h- auto flex justify-center">
-        <img src = {images[2].url} alt = "FTINESS IMAGES" className = "h-150"/>
+    <div className = "w-auto h- auto flex snap-x overflow-x-scroll scrollbar-hide bg-amber-950">
+        <img src = {data} alt = "FTINESS IMAGES" className = "h-150 snap-center ml-75 mt-5 rounded-3xl"/>
+        <img src = {data1} alt = "FTINESS IMAGES" className = "h-150 snap-center ml-10 mt-5 rounded-3xl"/>
+        <img src = {data} alt = "FTINESS IMAGES" className = "h-150 snap-center ml-10 mt-5 mr-60 rounded-3xl"/>
     </div>
     </>
   );
